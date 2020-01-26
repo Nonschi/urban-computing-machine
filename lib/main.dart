@@ -4,7 +4,9 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:esense_flutter/esense.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -13,14 +15,27 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _deviceName = 'Unknown';
-  double _voltage = -1;
   String _deviceStatus = '';
   bool sampling = false;
   String _event = '';
   String _button = 'not pressed';
 
+
+  double accelAlpha;
+  double accelBeta;
+  double accelGamma;
+
+
+
+  double gyroAlpha;
+  double gyroBeta;
+  double gyroGemma;
+
+
+
   // the name of the eSense device to connect to -- change this to your own device.
-  String eSenseName = 'eSense-0332';
+  String eSenseName = 'eSense-0414';
+
 
   @override
   void initState() {
@@ -74,9 +89,6 @@ class _MyAppState extends State<MyApp> {
         switch (event.runtimeType) {
           case DeviceNameRead:
             _deviceName = (event as DeviceNameRead).deviceName;
-            break;
-          case BatteryRead:
-            _voltage = (event as BatteryRead).voltage;
             break;
           case ButtonEventChanged:
             _button = (event as ButtonEventChanged).pressed ? 'pressed' : 'not pressed';
@@ -141,7 +153,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('eSense Demo App'),
+          title: const Text('Game of your life'),
         ),
         body: Align(
           alignment: Alignment.topLeft,
@@ -149,7 +161,6 @@ class _MyAppState extends State<MyApp> {
             children: [
               Text('eSense Device Status: \t$_deviceStatus'),
               Text('eSense Device Name: \t$_deviceName'),
-              Text('eSense Battery Level: \t$_voltage'),
               Text('eSense Button Event: \t$_button'),
               Text(''),
               Text('$_event'),
